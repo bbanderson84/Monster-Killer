@@ -1,5 +1,5 @@
 
-// 
+// variables that wont change globally
 const attackVal = 10;
 const monsterAttackVal = 14;
 const strongAttack = 18;
@@ -9,9 +9,10 @@ let chosenMaxLife = 100;
 let currentMonsterHealth = chosenMaxLife;
 let currentPlayerHealth = chosenMaxLife;
 
+// calls determined start health for player from vendor.js
 adjustHealthBars(chosenMaxLife);
 
-// function to determine when the game ends, and if player won/ lost /draw
+// function to determine when the game ends, and if player won/ lost /draw, calls from vendor.js
 function endRound() {
   const playerDmg = dealPlayerDamage(monsterAttackVal);
   currentPlayerHealth -= playerDmg;
@@ -50,11 +51,18 @@ function strongAttackHandler() {
 
 }
 
-// handler function that heals player
+// handler function that heals player using function from vendor.js
 function healPlayerHandler() {
+  let healValue;
+  if (currentPlayerHealth >= chosenMaxLife - healVal) {
+    alert("You can't heal to more than max initial health ");
+    healValue = chosenMaxLife - currentPlayerHealth;
+  } else {
+    healValue = healVal;
+  }
   increasePlayerHealth(healVal);
+  currentPlayerHealth += healVal;
   endRound();
-
 
 }
 
