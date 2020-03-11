@@ -12,11 +12,27 @@ const logEventMonsterAttack = 'MONSTER ATTACK';
 const logEventPlayerHeal = 'PLAYER HEAL';
 const logEventGameOver = 'GAME OVER';
 
-const enteredVal = prompt('Max life for user and monster', '100');
-let chosenMaxLife = parseInt(enteredVal);
+let lastLoggedEntry;
 
-if (isNaN(chosenMaxLife) || chosenMaxLife <= 0) {
+function getMaxLifeValues() {
+  const enteredVal = prompt('Max life for user and monster', '100');
+  const parsedVal = parseInt(enteredVal);
+
+if (isNaN(parsedVal) || parsedVal <= 0) {
+    throw {message: 'Invalid user input'};
+  }
+  return parsedVal;
+}
+
+let chosenMaxLife;
+
+try {
+   chosenMaxLife = getMaxLifeValues();
+} catch(error) {
+  console.log(error);
   chosenMaxLife = 100;
+  alert('You have entered something wrong! default value of 100 was used');
+
 }
 
 let currentMonsterHealth = chosenMaxLife;
@@ -151,16 +167,34 @@ function printLogHandler() {
   for (let i = 0; i < 3; i++) {
     console.log('----------');
   }
+  let j = 0;
+  //label statement
+  outerWhile: do {
+     console.log('Outer', j);
+     //label statement 
+     innerFor: for ( let k = 0; k < 5; k++) {
+       if (k === 3) {
+         break outerWhile;
+       }
+       console.log('Inner', k);
+     }
+    j++;
+  } while (j < 3);
+   
+  
 
   // for (let i = 0; i< battleLog.length; i++) {
   //   console.logt(battleLog[i]);
   // }
+  let i = 0;
   for (const logEntry of battleLog) {
-    console.log(`#${i}`);
-    for (const key in logEntry) {
-      console.log(`${key} => ${logEntry[key]}`);
-      // console.log(key);
-      // console.log(logEntry[key]);
+    if ((!lastLoggedEntry && lastLoggedEntry !== 0) || lastLoggedEntry < i) {
+      console.log(`#${i}`);
+      for (const key in logEntry) {
+        console.log(`${key} => ${logEntry[key]}`);
+    }
+    lastLoggedEntry = i;
+    break;
     }
     i++;
   }
