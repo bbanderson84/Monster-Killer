@@ -163,6 +163,7 @@ function healPlayerHandler() {
   endRound();
 }
 
+// function that logs actions 
 function printLogHandler() {
   for (let i = 0; i < 3; i++) {
     console.log('----------');
